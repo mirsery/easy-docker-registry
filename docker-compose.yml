@@ -1,0 +1,31 @@
+version: "3"
+services:
+  web:
+    container_name: my-registry-web
+    image: hyper/docker-registry-web:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - ./config/web/config.yml:/conf/config.yml
+      - ./certs/auth.key:/conf/auth.key
+    networks:
+      - docker-registry
+    deploy:
+      restart_policy:
+        condition: on-failure
+  registry:
+    container_name: my-registry
+    image: registry:2.4.1
+    ports:
+      - 5000:5000
+    volumes:
+      - ./config/registry/config.yml:/etc/docker/registry/config.yml
+      - ./certs/auth.cert:/etc/docker/registry/auth.cert
+      - /mnt/docker-registry/registry:/registry
+    networks:
+      - docker-registry
+    deploy:
+      restart_policy:
+        condition: on-failure 
+networks:
+  docker-registry:

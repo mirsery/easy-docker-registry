@@ -1,0 +1,23 @@
+version: 0.1
+storage:
+  filesystem:
+    rootdirectory: /registry
+  delete:
+    enabled: true
+http:
+  addr: 0.0.0.0:5000
+auth:
+  token:
+    realm: http://<my-registry-web>:8080/api/auth   # 此处url地址必须为外网可访问的地址
+    service: docker.hytiot.com
+    issuer: my-registry
+    rootcertbundle: /etc/docker/registry/auth.cert
+log:
+  level: info
+notifications:
+  endpoints:
+    - name: listener
+      url: http://<my-registry-web>:8080/api/notification  # 此处url地址必须为外网可访问的地址
+      timeout: 500ms
+      threshold: 5
+      backoff: 1s

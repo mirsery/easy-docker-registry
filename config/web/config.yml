@@ -1,0 +1,8 @@
+registry:
+  url: http://my-registry:5000/v2
+  name: docker.hytiot.com
+  readonly: false
+  auth:
+    enabled: true
+    key: /conf/auth.key
+    issuer: my-registry
